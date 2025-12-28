@@ -330,7 +330,7 @@ const processStream = async (
             if (REPLY_IN_THREADS && discordTarget.guild !== null) {
               if (discordTarget.channel.isThread()) {
                 // Already in a thread, send there
-                await discordTarget.channel.send(chunk);
+                await discordTarget.channel.send(`<@${discordTarget.author.id}> ${chunk}`);
               } else if (discordTarget.hasThread && discordTarget.thread) {
                 // Message has an existing thread, send there
                 await discordTarget.thread.send(chunk);
@@ -345,7 +345,7 @@ const processStream = async (
               }
             } else {
               // REPLY_IN_THREADS disabled, send to channel
-              await discordTarget.channel.send(chunk);
+              await discordTarget.channel.send(`<@${discordTarget.author.id}> ${chunk}`);
             }
           } else {
             await discordTarget.send(chunk);
@@ -356,7 +356,7 @@ const processStream = async (
       }
     }
   };
-
+  
   try {
     for await (const chunk of response) {
       // Handle different message types that might be returned
